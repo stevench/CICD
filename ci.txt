@@ -1,0 +1,7 @@
+linux上docker中搭建CI环境：
+1.linux安装jenkins：docker pull jenkins/jenkins:lts
+                   mkdir /home/jenkins_home
+                   docker run -d --name jenkins_01 -p 8888:8080 -v /home/jenkins_01:/home/jenkins_01 jenkins/jenkins:lts
+                   docker exec -it jenkins_01 bash  && cat /var/jenkins_home/secrets/initialAdminPassword
+2.jenkins中调用宿主机docker：
+                   2.1 docker run -d --name jenkins_02 -u root -p 9999:8080 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/jenkins:/var/jenkins_home/workspace jenkins/jenkins:lts
