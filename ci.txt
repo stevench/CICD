@@ -4,4 +4,6 @@ linux上docker中搭建CI环境：
                    docker run -d --name jenkins_01 -p 8888:8080 -v /home/jenkins_01:/home/jenkins_01 jenkins/jenkins:lts
                    docker exec -it jenkins_01 bash  && cat /var/jenkins_home/secrets/initialAdminPassword
 2.jenkins中调用宿主机docker：
-                   2.1 docker run -d --name jenkins_02 -u root -p 9999:8080 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/jenkins:/var/jenkins_home/workspace jenkins/jenkins:lts
+                   Dockerfile参考目录中Dockerfile
+                   docker run --name jenkins -p 8888:8080 -p 50000:50000 -v /etc/timezone:/etc/timezone -v /etc/localtime:/etc/localtime -v /tmp/jenkins:/var/jenkins_home -v /tmp/jenkins/settings:/var/settings -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -d my-jenkins
+                   如果缺少so文件，则使用cp命令拷贝到容器的/usr/lib目录下
