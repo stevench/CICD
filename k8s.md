@@ -59,6 +59,15 @@ kubeadm init \
 > --kubernetes-version v1.16.3  指定版本，可选，不加就默认最新版，
 > --ignore-preflight-errors=NumCPU  无视 cpu 检查，cpu 至少要求 2 个，我虚拟机只配了一个， 不加报错，加了警告
 
+[问题解决]
+kubeadm join 超时报错 error execution phase kubelet-start: error uploading crisocket: timed out waiting for the condition
+解决:
+swapoff -a
+kubeadm reset
+systemctl daemon-reload
+systemctl restart kubelet
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X  
+
 
 + 安装完成提示， 信息要记下，
 ```
@@ -116,4 +125,18 @@ kubeadm join 192.168.6.142:6443 --token 8cikod.edxfpc3auefetiag \
 
 
 + dashboard 
-> [https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml](https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml)
+> 1.下载阿里云的镜像：docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.0
+> 2.重新打tag: docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.0 k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.0
+> 3.通过yml文件拉起pod: kubectl apply -f http://mirror.faasx.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
++ 获取token
+> kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token
+
+
+
+
++ kubernetes dashboard安装
+下载 Dashboard yaml 文件
+wget http://pencil-file.oss-cn-hangzhou.aliyuncs.com/blog/kubernetes-dashboard.yaml
+
+打开下载的文件添加一项：type: NodePort，暴露出去 Dashboard 端口，方便外部访问
