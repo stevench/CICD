@@ -7,3 +7,6 @@ linux上docker中搭建CI环境：
                    Dockerfile参考目录中Dockerfile
                    docker run --name jenkins -p 8888:8080 -p 50000:50000 -v /etc/timezone:/etc/timezone -v /etc/localtime:/etc/localtime -v /tmp/jenkins:/var/jenkins_home -v /tmp/jenkins/settings:/var/settings -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -d my-jenkins
                    如果缺少so文件，则使用cp命令拷贝到容器的/usr/lib目录下
+
+linux上配置ssh密钥免密登录:
+     ssh-keygen  && ssh-copy-id 用户名@节点IP

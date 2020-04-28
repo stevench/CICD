@@ -48,7 +48,7 @@ kubeadm init \
     --apiserver-advertise-address=192.168.6.142 \    
     --image-repository registry.aliyuncs.com/google_containers \
     --pod-network-cidr=10.244.0.0/16 \
-    --kubernetes-version v1.16.3 \
+    --kubernetes-version v1.18.1 \
     --ignore-preflight-errors=NumCPU 
 ```  
 
@@ -66,7 +66,7 @@ swapoff -a
 kubeadm reset
 systemctl daemon-reload
 systemctl restart kubelet
-iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X  
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 
 + 安装完成提示， 信息要记下，
@@ -140,3 +140,4 @@ kubeadm join 192.168.6.142:6443 --token 8cikod.edxfpc3auefetiag \
 wget http://pencil-file.oss-cn-hangzhou.aliyuncs.com/blog/kubernetes-dashboard.yaml
 
 打开下载的文件添加一项：type: NodePort，暴露出去 Dashboard 端口，方便外部访问
+
