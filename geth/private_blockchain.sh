@@ -1,0 +1,1 @@
+geth --http --http.addr="0.0.0.0" --http.corsdomain="*" --unlock '0,1,2' --password ~/.ethereum/password --allow-insecure-unlock  --nodiscover --maxpeers '5' --networkid '1234574' --datadir '~/.ethereum'  console
